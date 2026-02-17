@@ -9,7 +9,7 @@ import envValidation from "./common/config/env.validation";
 	imports: [
 		ConfigModule.forRoot({
 			isGlobal: true,
-			envFilePath: ".env",
+			envFilePath: `.env${process.env.NODE_ENV ? `.${process.env.NODE_ENV}` : ""}`,
 			load: [appConfig],
 			validationSchema: envValidation,
 		}),
