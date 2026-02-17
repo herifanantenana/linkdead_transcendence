@@ -16,9 +16,9 @@
 		"rootDir": "./",
 		"baseUrl": "./",
 		"paths": {
-			"@apk_common/*": ["./src/common"],
-			"@apk_modules/*": ["./src/modules"],
-			"@apk_shared/*": ["./src/shared"]
+			"@apk_common/*": ["./src/common/*"],
+			"@apk_modules/*": ["./src/modules/*"],
+			"@apk_shared/*": ["./src/shared/*"]
 		},
 		"incremental": true,
 		"skipLibCheck": true,
