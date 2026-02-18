@@ -3,11 +3,12 @@ import { type ConfigType } from "@nestjs/config";
 import { drizzle, NodePgDatabase } from "drizzle-orm/node-postgres";
 import { Pool } from "pg";
 import databaseConfig from "./env/database.env";
+import * as schemas from "./schemas/schema";
 
 @Injectable()
 export class DrizzleService implements OnModuleInit, OnModuleDestroy {
 	private readonly logger = new Logger(DrizzleService.name);
-	private database: NodePgDatabase;
+	private database: NodePgDatabase<typeof schemas>;
 	private pool: Pool;
 
 	constructor(@Inject(databaseConfig.KEY) private readonly config: ConfigType<typeof databaseConfig>) {}
@@ -27,7 +28,7 @@ export class DrizzleService implements OnModuleInit, OnModuleDestroy {
 			password: this.config.password,
 			database: this.config.name,
 		});
-		this.database = drizzle(this.pool);
+		this.database = drizzle({ client: this.pool, schema: schemas });
 		try {
 			await this.database.execute("SELECT 1");
 			this.logger.log("Drizzle ORM and PostgreSQL connection initialized successfully.");
@@ -43,7 +44,7 @@ export class DrizzleService implements OnModuleInit, OnModuleDestroy {
 		await this.pool.end();
 	}
 
-	get db(): NodePgDatabase {
+	get db(): NodePgDatabase<typeof schemas> {
 		return this.database;
 	}
 }

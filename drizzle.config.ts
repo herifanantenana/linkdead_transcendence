@@ -5,11 +5,9 @@ const envFile = `.env${process.env.NODE_ENV ? `.${process.env.NODE_ENV}` : ""}`;
 
 dotenv.config({ path: envFile });
 
-console.log(process.env.NODE_ENV);
-
 export default defineConfig({
 	dialect: "postgresql",
-	schema: "@apk_common/database/schema/*",
+	schema: "./src/common/database/schemas/schema.ts",
 	out: "./drizzle",
 	dbCredentials: {
 		host: process.env.DATABASE_HOST ?? "localhost",
