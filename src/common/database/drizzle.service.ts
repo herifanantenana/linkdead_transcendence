@@ -29,10 +29,11 @@ export class DrizzleService implements OnModuleInit, OnModuleDestroy {
 		});
 		this.database = drizzle(this.pool);
 		try {
-			await this.pool.query("SELECT 1");
+			await this.database.execute("SELECT 1");
 			this.logger.log("Drizzle ORM and PostgreSQL connection initialized successfully.");
 		} catch (error) {
 			this.logger.error("Failed to connect to database: " + (error as Error).message);
+			await this.pool.end();
 			throw error;
 		}
 	}
