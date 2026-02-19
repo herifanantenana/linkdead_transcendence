@@ -1,5 +1,5 @@
 import { defineRelations } from "drizzle-orm";
-import { organizations } from "../organization/organization.schema";
+import { organizations } from "../organization/organizations.schema";
 import { actors } from "./actors.schema";
 import { sessions } from "./sessions.schema";
 import { users } from "./user.schema";
