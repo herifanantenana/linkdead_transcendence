@@ -1,6 +1,5 @@
-import { defineRelations } from "drizzle-orm";
-import { pgTable, unique, uuid, varchar } from "drizzle-orm/pg-core";
-import { baseTimestamps, withTimestamps } from "../shared/timestamps";
+import { foreignKey, pgTable, unique, uuid, varchar } from "drizzle-orm/pg-core";
+import { baseTimestamps, withTimestamps } from "../shared/withTimestamps";
 import { domains } from "./domains.schema";
 
 export const categories = pgTable(
@@ -12,14 +11,12 @@ export const categories = pgTable(
 		domain_id: uuid("domain_id").notNull(),
 		...withTimestamps(baseTimestamps),
 	},
-	(t) => [unique("unique_domain_slug").on(t.domain_id, t.slug)],
-);
-
-export const categoriesRelations = defineRelations({ categories, domains }, (r) => ({
-	categories: {
-		domain: r.one.domains({
-			from: r.categories.domain_id,
-			to: r.domains.id,
+	(t) => [
+		unique("unique_domain_slug").on(t.domain_id, t.slug),
+		foreignKey({
+			name: "categories_domain_id_fk",
+			columns: [t.domain_id],
+			foreignColumns: [domains.id],
 		}),
-	},
-}));
+	],
+);
