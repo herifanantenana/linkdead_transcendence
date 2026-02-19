@@ -3,7 +3,7 @@ import { type ConfigType } from "@nestjs/config";
 import { drizzle, NodePgDatabase } from "drizzle-orm/node-postgres";
 import { Pool } from "pg";
 import databaseConfig from "./env/database.env";
-import * as schemas from "./schemas/schema";
+import * as schemas from "./schemas";
 
 @Injectable()
 export class DrizzleService implements OnModuleInit, OnModuleDestroy {
@@ -20,14 +20,9 @@ export class DrizzleService implements OnModuleInit, OnModuleDestroy {
 			this.logger.error("Database configuration is incomplete. Please check your environment variables.");
 			throw new Error("Database configuration is incomplete.");
 		}
+		const connectionString = `postgresql://${this.config.user}:${this.config.password}@${this.config.host}:${this.config.port}/${this.config.name}`;
 
-		this.pool = new Pool({
-			host: this.config.host,
-			port: this.config.port,
-			user: this.config.user,
-			password: this.config.password,
-			database: this.config.name,
-		});
+		this.pool = new Pool({ connectionString });
 		this.database = drizzle({ client: this.pool, schema: schemas });
 		try {
 			await this.database.execute("SELECT 1");

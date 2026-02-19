@@ -18,11 +18,12 @@
 		"test:cov": "jest --coverage",
 		"test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
 		"test:e2e": "jest --config ./test/jest-e2e.json",
-		"db:push": "drizzle-kit push",
-		"db:pull": "drizzle-kit pull",
+		"db:push": "cross-env NODE_ENV=development drizzle-kit push",
+		"db:pull": "cross-env NODE_ENV=development drizzle-kit pull",
 		"db:generate": "cross-env NODE_ENV=development drizzle-kit generate",
 		"db:migrate": "cross-env NODE_ENV=development drizzle-kit migrate",
-		"db:studio": "cross-env NODE_ENV=development drizzle-kit studio"
+		"db:studio": "cross-env NODE_ENV=development drizzle-kit studio",
+		"db:cleanup": "cross-env NODE_ENV=development ts-node src/common/database/scripts/clean-up.ts"
 	},
 	"dependencies": {
 		"@nestjs/common": "^11.1.14",
