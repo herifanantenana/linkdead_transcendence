@@ -1,6 +1,6 @@
 import { pgTable, varchar } from "drizzle-orm/pg-core";
 import { _id } from "../shared/id";
-import { baseTimestamps, withTimestamps } from "../shared/withTimestamps";
+import { baseTimestamps, withTimestamps } from "../shared/timestamps";
 
 export const skills = pgTable("skills", {
 	id: _id,

@@ -4,11 +4,30 @@ import { drizzle, NodePgDatabase } from "drizzle-orm/node-postgres";
 import { Pool } from "pg";
 import databaseConfig from "./env/database.env";
 import * as schemas from "./schemas";
+import {
+	actorsRelations,
+	categoriesRelations,
+	domainsRelations,
+	organizationsRelations,
+	sessionsRelations,
+	skillsRelations,
+	usersRelations,
+} from "./schemas";
+
+const relations = {
+	...usersRelations,
+	...actorsRelations,
+	...sessionsRelations,
+	...organizationsRelations,
+	...domainsRelations,
+	...categoriesRelations,
+	...skillsRelations,
+};
 
 @Injectable()
 export class DrizzleService implements OnModuleInit, OnModuleDestroy {
 	private readonly logger = new Logger(DrizzleService.name);
-	private database: NodePgDatabase<typeof schemas>;
+	private database: NodePgDatabase<typeof schemas, typeof relations>;
 	private pool: Pool;
 
 	constructor(@Inject(databaseConfig.KEY) private readonly config: ConfigType<typeof databaseConfig>) {}
@@ -23,7 +42,7 @@ export class DrizzleService implements OnModuleInit, OnModuleDestroy {
 		const connectionString = `postgresql://${this.config.user}:${this.config.password}@${this.config.host}:${this.config.port}/${this.config.name}`;
 
 		this.pool = new Pool({ connectionString });
-		this.database = drizzle({ client: this.pool, schema: schemas });
+		this.database = drizzle({ client: this.pool, schema: schemas, relations });
 		try {
 			await this.database.execute("SELECT 1");
 			this.logger.log("Drizzle ORM and PostgreSQL connection initialized successfully.");
@@ -39,7 +58,7 @@ export class DrizzleService implements OnModuleInit, OnModuleDestroy {
 		await this.pool.end();
 	}
 
-	get db(): NodePgDatabase<typeof schemas> {
+	get db(): NodePgDatabase<typeof schemas, typeof relations> {
 		return this.database;
 	}
 }

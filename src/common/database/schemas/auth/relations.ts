@@ -1,10 +1,10 @@
-import { defineRelations } from "drizzle-orm";
+import { defineRelationsPart } from "drizzle-orm";
 import { organizations } from "../organization/organizations.schema";
 import { actors } from "./actors.schema";
 import { sessions } from "./sessions.schema";
-import { users } from "./user.schema";
+import { users } from "./users.schema";
 
-export const usersRelations = defineRelations({ users, organizations, actors, sessions }, (r) => ({
+export const usersRelations = defineRelationsPart({ users, organizations, actors, sessions }, (r) => ({
 	users: {
 		organization: r.one.organizations({
 			from: r.users.id,
@@ -26,7 +26,7 @@ export const usersRelations = defineRelations({ users, organizations, actors, se
 	},
 }));
 
-export const actorsRelations = defineRelations({ actors, users, organizations, sessions }, (r) => ({
+export const actorsRelations = defineRelationsPart({ actors, users, organizations, sessions }, (r) => ({
 	actors: {
 		user: r.one.users({
 			from: r.actors.userId,
@@ -45,7 +45,7 @@ export const actorsRelations = defineRelations({ actors, users, organizations, s
 	},
 }));
 
-export const sessionsRelations = defineRelations({ sessions, users, actors }, (r) => ({
+export const sessionsRelations = defineRelationsPart({ sessions, users, actors }, (r) => ({
 	sessions: {
 		user: r.one.users({
 			from: r.sessions.userId,

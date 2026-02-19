@@ -1,7 +1,7 @@
 import { foreignKey, jsonb, pgEnum, pgTable, text, uuid, varchar } from "drizzle-orm/pg-core";
-import { users } from "../auth/user.schema";
+import { users } from "../auth/users.schema";
 import { _id } from "../shared/id";
-import { baseTimestamps, softDeleteTimestamps, withTimestamps } from "../shared/withTimestamps";
+import { baseTimestamps, softDeleteTimestamps, withTimestamps } from "../shared/timestamps";
 
 export const organizationTypes = pgEnum("organization_types", [
 	"company",

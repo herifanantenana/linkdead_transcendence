@@ -1,6 +1,6 @@
-import { foreignKey, pgTable, unique, uuid, varchar } from "drizzle-orm/pg-core";
+import { foreignKey, index, pgTable, unique, uuid, varchar } from "drizzle-orm/pg-core";
 import { _id } from "../shared/id";
-import { baseTimestamps, withTimestamps } from "../shared/withTimestamps";
+import { baseTimestamps, withTimestamps } from "../shared/timestamps";
 import { domains } from "./domains.schema";
 
 export const categories = pgTable(
@@ -19,5 +19,6 @@ export const categories = pgTable(
 			columns: [t.domainId],
 			foreignColumns: [domains.id],
 		}),
+		index("categories_domain_id_idx").on(t.domainId),
 	],
 );

@@ -1,5 +1,5 @@
-import { foreignKey, pgTable, primaryKey, uuid } from "drizzle-orm/pg-core";
-import { baseTimestamps, withTimestamps } from "../shared/withTimestamps";
+import { foreignKey, index, pgTable, primaryKey, uuid } from "drizzle-orm/pg-core";
+import { baseTimestamps, withTimestamps } from "../shared/timestamps";
 import { domains } from "./domains.schema";
 import { skills } from "./skills.schema";
 
@@ -22,5 +22,7 @@ export const domainsToSkills = pgTable(
 			columns: [t.skillId],
 			foreignColumns: [skills.id],
 		}),
+		index("domains_to_skills_skill_id_idx").on(t.skillId),
+		index("domains_to_skills_domain_id_idx").on(t.domainId),
 	],
 );
