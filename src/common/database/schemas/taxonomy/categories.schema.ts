@@ -8,14 +8,14 @@ export const categories = pgTable(
 		id: uuid("id").primaryKey().defaultRandom(),
 		name: varchar("name", { length: 50 }).notNull(),
 		slug: varchar("slug", { length: 100 }).notNull().unique(),
-		domain_id: uuid("domain_id").notNull(),
+		domainId: uuid("domain_id").notNull(),
 		...withTimestamps(baseTimestamps),
 	},
 	(t) => [
-		unique("unique_domain_slug").on(t.domain_id, t.slug),
+		unique("unique_domain_slug").on(t.domainId, t.slug),
 		foreignKey({
 			name: "categories_domain_id_fk",
-			columns: [t.domain_id],
+			columns: [t.domainId],
 			foreignColumns: [domains.id],
 		}),
 	],
