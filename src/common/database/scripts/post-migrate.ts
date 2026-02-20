@@ -19,11 +19,9 @@ async function runPostMigration() {
 		await client.connect();
 		console.log("Running post-migration SQL...");
 
-		// Read the post-migration SQL file
 		const sqlPath = join(__dirname, "../migrations/post-migrate.sql");
 		const sql = readFileSync(sqlPath, "utf-8");
 
-		// Execute the SQL
 		await client.query(sql);
 
 		console.log("✅ Post-migration completed successfully.");
