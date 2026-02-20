@@ -1,4 +1,5 @@
-import { foreignKey, pgEnum, pgTable, uuid } from "drizzle-orm/pg-core";
+import { sql } from "drizzle-orm";
+import { check, foreignKey, pgEnum, pgTable, uuid } from "drizzle-orm/pg-core";
 import { organizations } from "../organization/organizations.schema";
 import { _id } from "../shared/id";
 import { baseTimestamps, withTimestamps } from "../shared/timestamps";
@@ -11,8 +12,8 @@ export const actors = pgTable(
 	{
 		id: _id,
 		type: actorTypes("type").notNull(),
-		userId: uuid("user_id").unique(),
-		organizationId: uuid("organization_id").unique(),
+		userId: uuid("user_id"),
+		organizationId: uuid("organization_id"),
 		...withTimestamps(baseTimestamps),
 	},
 	(t) => [
@@ -26,5 +27,9 @@ export const actors = pgTable(
 			columns: [t.organizationId],
 			foreignColumns: [organizations.id],
 		}),
+		check(
+			"only_one_id",
+			sql`((user_id IS NOT NULL AND organization_id IS NULL) OR (user_id IS NULL AND organization_id IS NOT NULL))`,
+		),
 	],
 );

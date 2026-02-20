@@ -21,7 +21,9 @@
 		"db:push": "cross-env NODE_ENV=development drizzle-kit push",
 		"db:pull": "cross-env NODE_ENV=development drizzle-kit pull",
 		"db:generate": "cross-env NODE_ENV=development drizzle-kit generate",
-		"db:migrate": "cross-env NODE_ENV=development drizzle-kit migrate",
+		"db:migrate": "cross-env NODE_ENV=development drizzle-kit migrate && pnpm db:post-migrate",
+		"db:migrate:base": "cross-env NODE_ENV=development drizzle-kit migrate",
+		"db:post-migrate": "cross-env NODE_ENV=development ts-node src/common/database/scripts/post-migrate.ts",
 		"db:studio": "cross-env NODE_ENV=development drizzle-kit studio",
 		"db:cleanup": "cross-env NODE_ENV=development ts-node src/common/database/scripts/clean-up.ts"
 	},

@@ -36,12 +36,26 @@ async function dropAllEnums(client: Client) {
 	console.log("All enums dropped.");
 }
 
+async function dropAllIndexes(client: Client) {
+	await client.query(`
+		DO $$ DECLARE
+			r RECORD;
+		BEGIN
+			FOR r IN (SELECT indexname FROM pg_indexes WHERE schemaname = current_schema()) LOOP
+				EXECUTE 'DROP INDEX IF EXISTS ' || quote_ident(r.indexname) || ' CASCADE';
+			END LOOP;
+		END $$;
+	`);
+	console.log("All indexes dropped.");
+}
+
 async function cleanUp() {
 	const client = getClient();
 	try {
 		await client.connect();
 		await dropAllTables(client);
 		await dropAllEnums(client);
+		await dropAllIndexes(client);
 		console.log("Database cleaned.");
 	} catch (err) {
 		console.error("Error during cleanup:", err);
