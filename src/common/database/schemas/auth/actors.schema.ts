@@ -1,8 +1,8 @@
 import { sql } from "drizzle-orm";
 import { check, foreignKey, pgEnum, pgTable, uuid } from "drizzle-orm/pg-core";
+import { _id } from "../_shared/id";
+import { baseTimestamps, withTimestamps } from "../_shared/timestamps";
 import { organizations } from "../organization/organizations.schema";
-import { _id } from "../shared/id";
-import { baseTimestamps, withTimestamps } from "../shared/timestamps";
 import { users } from "./users.schema";
 
 export const actorTypes = pgEnum("actor_types", ["user", "organization"]);

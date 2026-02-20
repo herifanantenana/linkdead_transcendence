@@ -1,5 +1,5 @@
 import { foreignKey, index, pgTable, primaryKey, uuid } from "drizzle-orm/pg-core";
-import { baseTimestamps, withTimestamps } from "../shared/timestamps";
+import { baseTimestamps, withTimestamps } from "../_shared/timestamps";
 import { domains } from "./domains.schema";
 import { skills } from "./skills.schema";
 

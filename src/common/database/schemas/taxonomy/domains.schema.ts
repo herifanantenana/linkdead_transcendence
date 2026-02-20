@@ -1,6 +1,6 @@
 import { pgTable, varchar } from "drizzle-orm/pg-core";
-import { _id } from "../shared/id";
-import { baseTimestamps, withTimestamps } from "../shared/timestamps";
+import { _id } from "../_shared/id";
+import { baseTimestamps, withTimestamps } from "../_shared/timestamps";
 
 export const domains = pgTable("domains", {
 	id: _id,

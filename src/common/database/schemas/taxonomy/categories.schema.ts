@@ -1,6 +1,6 @@
 import { foreignKey, index, pgTable, unique, uuid, varchar } from "drizzle-orm/pg-core";
-import { _id } from "../shared/id";
-import { baseTimestamps, withTimestamps } from "../shared/timestamps";
+import { _id } from "../_shared/id";
+import { baseTimestamps, withTimestamps } from "../_shared/timestamps";
 import { domains } from "./domains.schema";
 
 export const categories = pgTable(

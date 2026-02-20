@@ -1,6 +1,6 @@
 import { foreignKey, index, pgEnum, pgTable, text, uuid, varchar } from "drizzle-orm/pg-core";
-import { _id } from "../shared/id";
-import { baseTimestamps, expirationTimestamps, withTimestamps } from "../shared/timestamps";
+import { _id } from "../_shared/id";
+import { baseTimestamps, expirationTimestamps, withTimestamps } from "../_shared/timestamps";
 import { actors } from "./actors.schema";
 import { users } from "./users.schema";
 

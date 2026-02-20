@@ -1,6 +1,6 @@
 import { jsonb, pgEnum, pgTable, text, varchar } from "drizzle-orm/pg-core";
-import { _id } from "../shared/id";
-import { baseTimestamps, softDeleteTimestamps, withTimestamps } from "../shared/timestamps";
+import { _id } from "../_shared/id";
+import { baseTimestamps, softDeleteTimestamps, withTimestamps } from "../_shared/timestamps";
 
 export const authProviders = pgEnum("auth_providers", ["local", "google", "github"]);
 
