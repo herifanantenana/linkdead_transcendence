@@ -25,7 +25,7 @@
     "db:migrate:base": "cross-env NODE_ENV=development drizzle-kit migrate",
     "db:post-migrate": "cross-env NODE_ENV=development ts-node ./src/common/db/seed/post-migrate.ts",
     "db:studio": "cross-env NODE_ENV=development drizzle-kit studio",
-    "db:cleanup": "cross-env NODE_ENV=development ts-node ./src/common/db/seed/clean-up.ts",
+    "db:cleanup": "cross-env NODE_ENV=development ts-node ./src/common/db/seed/clean.ts",
     "db:reset": "cross-env NODE_ENV=development ts-node ./src/common/db/seed/reset.ts"
   },
   "dependencies": {
