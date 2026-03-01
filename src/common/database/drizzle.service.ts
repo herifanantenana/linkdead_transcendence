@@ -1,4 +1,5 @@
 import DatabaseConfig from "@apk_common/config/database.config";
+import { AppLogger } from "@apk_common/infra/logger/logger.service";
 import { Inject, Injectable, OnModuleDestroy, OnModuleInit } from "@nestjs/common";
 import { type ConfigType } from "@nestjs/config";
 import { drizzle, NodePgDatabase } from "drizzle-orm/node-postgres";
@@ -16,8 +17,14 @@ export type DbTx = NodePgDatabase<typeof allSchemas, typeof allRelations>;
 export class DrizzleService implements OnModuleInit, OnModuleDestroy {
 	private readonly db: DbTx;
 	private readonly pool: Pool;
+	private readonly logger: AppLogger;
 
-	constructor(@Inject(DatabaseConfig.KEY) readonly databaseConfig: ConfigType<typeof DatabaseConfig>) {
+	constructor(
+		@Inject(DatabaseConfig.KEY) readonly databaseConfig: ConfigType<typeof DatabaseConfig>,
+		private readonly appLogger: AppLogger,
+	) {
+		this.logger = appLogger.withContext(DrizzleService.name);
+
 		const { user, password, host, port, name } = databaseConfig;
 		if (!user || !password || !host || !port || !name) {
 			throw new Error("Database configuration is missing required fields");
@@ -30,9 +37,9 @@ export class DrizzleService implements OnModuleInit, OnModuleDestroy {
 	async onModuleInit() {
 		try {
 			await this.db.execute("SELECT 1");
-			console.log("Database connection established successfully");
+			this.logger.log("Database connection established successfully");
 		} catch (error) {
-			console.error("Failed to connect to the database:", error);
+			this.logger.error("Failed to connect to the database:", error);
 			throw error;
 		}
 	}

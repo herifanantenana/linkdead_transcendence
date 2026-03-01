@@ -16,4 +16,4 @@ import { DrizzleUnitOfWorkAdapter } from "./unit-of-work.drizzle.adapter";
 	],
 	exports: [DrizzleService, UNIT_OF_WORK],
 })
-export class DrizzleModule {}
+export class DatabaseModule {}
