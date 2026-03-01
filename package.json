@@ -25,8 +25,8 @@
 		"db:migrate:base": "cross-env NODE_ENV=development drizzle-kit migrate",
 		"db:post-migrate": "cross-env NODE_ENV=development ts-node ./src/common/database/seed/post-migrate.ts",
 		"db:studio": "cross-env NODE_ENV=development drizzle-kit studio",
-		"db:cleanup": "cross-env NODE_ENV=development ts-node ./src/common/database/seed/clean.ts",
-		"db:reset": "cross-env NODE_ENV=development ts-node ./src/common/database/seed/reset-data.ts"
+		"db:clean": "cross-env NODE_ENV=development ts-node ./src/common/database/seed/clean.ts",
+		"db:reset": "cross-env NODE_ENV=development ts-node ./src/common/database/seed/reset.ts"
 	},
 	"dependencies": {
 		"@nestjs-modules/mailer": "^2.0.2",
